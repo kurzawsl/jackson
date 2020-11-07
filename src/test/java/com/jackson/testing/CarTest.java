@@ -2,6 +2,7 @@ package com.jackson.testing;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -31,4 +32,10 @@ class CarTest {
         assertThat(car.getColor()).isEqualTo("Black");
     }
 
+    @Test
+    void jsonToJsonNode() throws IOException {
+        String json = "{ \"color\" : \"Black\", \"type\" : \"FIAT\" }";
+        JsonNode jsonNode = objectMapper.readTree(json);
+        assertThat(jsonNode.get("color").asText()).isEqualTo("Black");
+    }
 }
